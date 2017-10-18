@@ -3,24 +3,24 @@ SHEsisPlus
 
 ## Introduction
 
-SHEsisPlus is a open source software package for analysis of genetic association, Hardy-weinberg equilibrium, linkage disequilibrium and haplotype construction at multiallelic polymorphism loci, compatible for both diploid and polyploid species. The web-based version can be accessed via [SHEsisPlus web version](http://shesisplus.bio-x.cn/).
+SHEsisPlus is an open source software package for the analysis of genetic association, Hardy-weinberg equilibrium, linkage disequilibrium and haplotype construction at multiallelic polymorphic loci, compatible with both diploid and polyploid species. The web-based version can be accessed via [SHEsisPlus web version](http://shesisplus.bio-x.cn/).
 
 ## What's new
 
-Compared to previous version of [SHEsis](http://analysis.bio-x.cn/myAnalysis.php), SHEsisPlus is compatitable for haploid, diploid and polyploid species. It can not only analyze case/control data, but also quantitative trait data. It provides various ways of P value adjustments, including Holm step-down, Sidak single-step, Sidak step-down, FDR and permutation tests. All these can be can be performed via the webui.  
+Compared to the previous version of [SHEsis](http://analysis.bio-x.cn/myAnalysis.php), SHEsisPlus is compatible with haploid, diploid and polyploid species. Not only can it analyze case/control data, but also quantitative trait data. It provides various ways of P-value adjustments, including Holm step-down, Sidak single-step, Sidak step-down, FDR and permutation tests. All these can be can be performed via the web interface.  
 
 ## Compile
 
-To build SHEsisPlus from source code, please first install [Boost C++ Library](http://www.boost.org). 
+To build SHEsisPlus from source code, please first install the [Boost C++ Library](http://www.boost.org). 
 
 ### Linux
 
-Modify makefile to specify the locations of Boost include files and libs. Then type "make" in the souce code directory.
+Modify the makefile to specify the locations of Boost include files and libs. Then type "make" in the souce code directory.
 
 ### Windows:
-Create a project in Microsoft visual studio. Add all the source files and header files EXCEPT unit test source files (\*\_test.cpp) to the current project. Modify the project properties and specify the path of Boost includefiles and libs. Then build it. 
+Create a project in Microsoft visual studio. Add all the source files and header files EXCEPT unit test source files (\*\_test.cpp) to the current project. Modify the project properties and specify the path of Boost include files and libs. Then build it. 
 
-<strong>Note:</strong> SHEsisPlus is developed and tested under Linux. Its behaviour under Windows is not guaranteed. If you want to compile it under Windows, we recommand you to build it within [Cygwin](https://www.cygwin.com/). 
+<strong>Note:</strong> SHEsisPlus is developed and tested under Linux. Its behaviour under Windows is not guaranteed. If you want to compile it under Windows, we recommend you to build it within [Cygwin](https://www.cygwin.com/). 
 
 ## Input format
 
@@ -44,9 +44,9 @@ Create a project in Microsoft visual studio. Add all the source files and header
     id5  G G G  T A A  1 2 3  TA TT T
     id6  G A A  C C A  0 0 0  AA A  A
 
- The first column is sample id. The following columns are genotypes. They should be deliminated by space, comma or tab. Adjacent tokens will be compressed and will be treated as a single token. Genotypes can be any string (e.g. 1,2,3,4, or A,T,G,C , or A1,A2,A3,A4, or anything else) except 0, which is the coding for missing genotypes.
+The first column is the sample id. The following columns are genotypes. They should be delimited by space, comma or tab. Adjacent tokens will be compressed and will be treated as a single token. Genotypes can be any string (e.g. 1,2,3,4, or A,T,G,C , or A1,A2,A3,A4, or anything else) except 0, which is the coding for missing genotypes.
 
-The above shown is sample data for diploid and tripolid species. For diploid species, the columns correspond to: sample id, site1-allele1, site1-allele2, site2-allele1, site2-allele2, .... For triploid species, the columns should be: sample id, site1-allele1, site1-allele2, site1-allele3, site2-allele1, site2-allele2, site2-allele3, ... 
+Shown above is sample data for diploid and tripolid species. For diploid species, the columns correspond to: sample id, site1-allele1, site1-allele2, site2-allele1, site2-allele2, .... For triploid species, the columns should be: sample id, site1-allele1, site1-allele2, site1-allele3, site2-allele1, site2-allele2, site2-allele3, ... 
 
 ### Quantitative trait data
 
@@ -109,20 +109,22 @@ The format for quantitative trait data is similar to that for case/control data 
   --adjust              adjust p-value for multiple testing
   --webserver           Internal use for webserver
 </pre>
-### example
+
+### Example
 
 ./SHEsisPlus --input-case case.txt --input-ctrl ctrl-txt --snp-line "rs1,rs2,rs3" --output out --ploidy 2 --hwe --assoc --permutation 1000 --haplo-EM --mask "1,1,0" --ld-in-case --adjust
 
 ./SHEsisPlus --input qtl.txt --qtl --ploidy 3 --hwe --assoc --ld --haplo-SAT --lft 0.01 --permutation 10000
 
-##Interpret output
+## Interpret output
 
-###Binary phenotype
+### Binary phenotype
 
-####Association test
+#### Association test
+
 <img src="http://shesisplus.bio-x.cn/images/help-assoc-binary.PNG" >
 
-This is an exmple of output for case/control association analysis. The fileds are:
+This is an example of output for case/control association analysis. The fields are:
 
 <table>
 <tbody>
@@ -173,21 +175,25 @@ This is an exmple of output for case/control association analysis. The fileds ar
 </table>
 
 #### Hardy-weinberg equilibrium test
+
 <img src="http://shesisplus.bio-x.cn/images/help-hwe-binary.PNG">
 
-The output is straightforward. Hardy-weinberg equilibrium is calculated in cases, in controls, and in both cases and controls. Both Pearson's chi square test and Fisher's exact test are performed. 
+The output is straightforward. Hardy-weinberg equilibrium is calculated in the cases, controls, and in both cases and controls. Both Pearson's chi square test and Fisher's exact test are performed. 
 
 #### Haplotype analysis
+
 <img src="http://shesisplus.bio-x.cn/images/help-hap-binary.PNG">
 
- In this example, haplotypes with frequency <0.03 are discarded. 0.03 is the default value. You can change this value by option --lft. The fields in the table are also easy to understand. Apart from association test for every single haplotype, a global result is also given. This result shows if the haplotype distribution is different between cases and controls.
+In this example, haplotypes with frequency <0.03 are discarded, where 0.03 is the default value. You can change this value by option `--lft`. The fields in the table are also easy to understand. 
+
+Apart from association test for every single haplotype, a global result is also given. This result shows if the haplotype distribution is different between cases and controls.
 
 #### Linkage disequilibrium analysis
 
 <img src="http://shesisplus.bio-x.cn/images/help_binary_D.jpg">
 <img src="http://shesisplus.bio-x.cn/images/help_binary_R2.jpg">
 
-For linkage disequilibrium analysis, pair-wise D' and R<sup>2</sup> are calculated. The higher two loci are in linkage disequilibrium, the darker the color will be. 
+For linkage disequilibrium analysis, pair-wise D' and R<sup>2</sup> values are calculated. The higher two loci are in linkage disequilibrium, the darker the color will be. 
 
 ### Quantitative trait
 
@@ -195,7 +201,7 @@ For linkage disequilibrium analysis, pair-wise D' and R<sup>2</sup> are calculat
 
 <img src="http://shesisplus.bio-x.cn/images/help-assoc-qtl.PNG">
 
-This is an exmple of output for case/control association analysis. The fileds are: 
+This is an example of output for case/control association analysis. The fields are: 
 
 <table>
 <tbody>
@@ -238,7 +244,7 @@ The following fields have been described before.
 
 <img src="http://shesisplus.bio-x.cn/images/help-hwe-qtl.PNG">
 
-For quantative trait, Hardy-weinberg equilibrium test in all samples are carried out. 
+For quantative traits, a Hardy-weinberg equilibrium test is carried out in all samples. 
 
 #### Haplotype analysis
 
